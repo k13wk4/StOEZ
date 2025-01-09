@@ -79,6 +79,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="detail-value">${item["№"]}</div>
                 </div>
                 <div class="detail-item">
+                    <div class="detail-label">Цех:</div>
+                    <div class="detail-value">${item["Цех"]}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Лінія:</div>
+                    <div class="detail-value">${item["Лінія"]}</div>
+                </div>
+                <div class="detail-item">
                     <div class="detail-label">Код обладнання:</div>
                     <div class="detail-value">${item["Код обладнання"]}</div>
                 </div>
@@ -91,8 +99,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="detail-value">${item["Номер Шафи КВПіА"]}</div>
                 </div>
                 <div class="detail-item">
-                    <div class="detail-label">Лінія:</div>
-                    <div class="detail-value">${item["Лінія"]}</div>
+                    <div class="detail-label">Номер автомата:</div>
+                    <div class="detail-value">${item["Номер автомата"]}</div>
                 </div>
                 <div class="detail-item">
                     <div class="detail-label">Тип пуску:</div>
@@ -107,12 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="detail-value">${item["Назва обладнання"]}</div>
                 </div>
                 <div class="detail-item">
-                    <div class="detail-label">Номер автомата:</div>
-                    <div class="detail-value">${item["Номер автомата"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Тип:</div>
-                    <div class="detail-value">${item["Тип"]}</div>
+                    <div class="detail-label">КВПіА:</div>
+                    <div class="detail-value">${item["КВПіА"]}</div>
                 </div>
                 <div class="detail-item">
                     <div class="detail-label">Модель датчика:</div>
@@ -123,12 +127,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="detail-value">${item["Номер сигналу"]}</div>
                 </div>
                 <div class="detail-item">
-                    <div class="detail-label">Посилання ЕМ:</div>
-                    <div class="detail-value">${item["Посилання ЕМ"]}</div>
+                    <div class="detail-label">Відмітка ЕМ:</div>
+                    <div class="detail-value">${item["Відмітка ЕМ"]}</div>
                 </div>
                 <div class="detail-item">
-                    <div class="detail-label">Посилання КВПіА:</div>
-                    <div class="detail-value">${item["Посилання КВПіА"]}</div>
+                    <div class="detail-label">Відмітка КВПіА:</div>
+                    <div class="detail-value">${item["Відмітка КВПіА"]}</div>
                 </div>
                 <div class="detail-item">
                     <div class="detail-label">Квадрат ЕМ:</div>
@@ -137,6 +141,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="detail-item">
                     <div class="detail-label">Квадрат КВПіА:</div>
                     <div class="detail-value">${item["Квадрат КВПіА"]}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Посилання ЕМ:</div>
+                    <div class="detail-value">${item["Посилання ЕМ"]}</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Посилання КВПіА:</div>
+                    <div class="detail-value">${item["Посилання КВПіА"]}</div>
                 </div>
             </div>`;
 

@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const backToResultsButton = document.getElementById("back-to-results");
 
     let data = [];
+    let previousScrollPosition = 0;
 
     // Загрузка данных из JSON
     fetch('./data/data.json')
@@ -16,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
         })
         .then(json => {
             data = json;
-            console.log("Дані завантажено:", data); // Отладка
         })
         .catch(error => {
             console.error("Помилка:", error);
@@ -35,11 +35,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function searchInData(query) {
         if (!query) return [];
-
         return data.filter(item =>
             cleanString(item["Код обладнання"] || '').includes(query)
         );
     }
+
+    // Показать кнопку при прокрутке вниз
+    window.onscroll = function() {
+        const scrollToTopButton = document.getElementById("scrollToTopButton");
+        if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 200) {
+            scrollToTopButton.style.display = "block";
+        } else {
+            scrollToTopButton.style.display = "none";
+        }
+    };
+
+    function scrollToTop() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
+    document.getElementById("scrollToTopButton").addEventListener("click", scrollToTop);
+
 
     function displayResults(results) {
         resultsContainer.innerHTML = "";
@@ -49,115 +66,55 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        results.forEach(item => {
+        results.forEach((item, index) => {
             const resultItem = document.createElement("div");
             resultItem.classList.add("result-item");
+            resultItem.dataset.index = index; // Уникальный идентификатор
 
             let resultHTML = `
                 <div class="result-title">${item["Код обладнання"]}</div>
                 <div>Номер Шафи ЕМ: ${item["Номер Шафи ЕМ"]}</div>
                 <div>Лінія: ${item["Лінія"]}</div>
-                <button onclick="showDetails('${item["Код обладнання"]}')">Деталі</button>
             `;
 
             resultItem.innerHTML = resultHTML;
+
+            // Передача объекта item напрямую
+            resultItem.addEventListener("click", () => showDetails(item));
             resultsContainer.appendChild(resultItem);
         });
     }
 
-    window.showDetails = function(code) {
-        const item = data.find(item => item["Код обладнання"] === code);
+    function showDetails(item) {
         if (!item) return;
+
+        // Сохраняем позицию скролла
+        previousScrollPosition = window.scrollY;
 
         resultsContainer.classList.add("hidden");
         detailsContainer.classList.remove("hidden");
+        detailsContainer.classList.add("details-section");
 
-        let detailsHtml = `<h3 class="details-heading">Деталі для ${item["Код обладнання"]}</h3>
-            <div class="details-section">
+        let detailsHtml = `<h3 class="details-heading">Деталі для ${item["Код обладнання"]}</h3>`;
+        Object.keys(item).forEach(key => {
+            detailsHtml += `
                 <div class="detail-item">
-                    <div class="detail-label">№:</div>
-                    <div class="detail-value">${item["№"]}</div>
+                    <div class="detail-label">${key}:</div>
+                    <div class="detail-value">${item[key]}</div>
                 </div>
-                <div class="detail-item">
-                    <div class="detail-label">Цех:</div>
-                    <div class="detail-value">${item["Цех"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Лінія:</div>
-                    <div class="detail-value">${item["Лінія"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Код обладнання:</div>
-                    <div class="detail-value">${item["Код обладнання"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Номер Шафи ЕМ:</div>
-                    <div class="detail-value">${item["Номер Шафи ЕМ"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Номер Шафи КВПіА:</div>
-                    <div class="detail-value">${item["Номер Шафи КВПіА"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Номер автомата:</div>
-                    <div class="detail-value">${item["Номер автомата"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Тип пуску:</div>
-                    <div class="detail-value">${item["Тип пуску"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Потужність:</div>
-                    <div class="detail-value">${item["Потужність"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Назва обладнання:</div>
-                    <div class="detail-value">${item["Назва обладнання"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">КВПіА:</div>
-                    <div class="detail-value">${item["КВПіА"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Модель датчика:</div>
-                    <div class="detail-value">${item["Модель датчика"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Номер сигналу:</div>
-                    <div class="detail-value">${item["Номер сигналу"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Відмітка ЕМ:</div>
-                    <div class="detail-value">${item["Відмітка ЕМ"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Відмітка КВПіА:</div>
-                    <div class="detail-value">${item["Відмітка КВПіА"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Квадрат ЕМ:</div>
-                    <div class="detail-value">${item["Квадрат ЕМ"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Квадрат КВПіА:</div>
-                    <div class="detail-value">${item["Квадрат КВПіА"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Посилання ЕМ:</div>
-                    <div class="detail-value">${item["Посилання ЕМ"]}</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-label">Посилання КВПіА:</div>
-                    <div class="detail-value">${item["Посилання КВПіА"]}</div>
-                </div>
-            </div>`;
+            `;
+        });
 
         detailsContainer.innerHTML = detailsHtml;
         backToResultsButton.classList.remove("hidden");
-        backToResultsButton.addEventListener("click", () => {
-            detailsContainer.classList.add("hidden");
-            resultsContainer.classList.remove("hidden");
-            backToResultsButton.classList.add("hidden");
-        });
-    };
+    }
+
+    backToResultsButton.addEventListener("click", () => {
+        detailsContainer.classList.add("hidden");
+        resultsContainer.classList.remove("hidden");
+        backToResultsButton.classList.add("hidden");
+
+        // Восстанавливаем позицию скролла
+        window.scrollTo(0, previousScrollPosition);
+    });
 });

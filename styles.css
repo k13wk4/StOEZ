@@ -34,31 +34,8 @@ header {
     outline: none;
 }
 
-#toggle-filter {
-    background-color: #3b5998;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-weight: bold;
-}
-
-#toggle-filter:hover {
-    background-color: #2d4373;
-}
-
 .hidden {
     display: none;
-}
-
-.filter-container {
-    margin-top: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 .results {
@@ -104,14 +81,14 @@ header {
     background-color: #2d4373;
 }
 
-/* Детали */
 .details-section {
     background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    margin: 20px auto;
+    width: 80%;
 }
 
 .details-section .detail-item {
@@ -137,12 +114,24 @@ header {
     font-size: 16px;
 }
 
-/* Дополнительный стиль для улучшения визуальной структуры */
-.details-section .detail-item:hover {
-    background-color: #f1f1f1;
+#scrollToTopButton {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    transition: opacity 0.3s;
 }
 
-.details-heading {
-    margin-left: 20px;
+#scrollToTopButton:hover {
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
